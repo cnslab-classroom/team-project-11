@@ -9,14 +9,13 @@ import java.io.IOException;
 public class TextToPromptManager {
 
     private static final String API_URL = "https://api-inference.huggingface.co/models/gpt2";
-    private static final String API_KEY = "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";
+    private static final String API_KEY = "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";
 
     static OkHttpClient client = new OkHttpClient();
 
     public static String convertToPrompt(String inputText) {
         JsonObject json = new JsonObject();
-        json.addProperty("inputs", "당신은 AI 프롬프트 변환 전문가입니다. 입력된 텍스트를 이미지 생성 AI에 적합한 프롬프트로 변환하세요. 입력 텍스트: " + inputText);
-
+        json.addProperty("inputs","You are an AI prompt conversion expert. Convert the input text into a prompt suitable for an image generation AI. Input text: " + inputText );
         RequestBody body = RequestBody.create(json.toString(), MediaType.get("application/json; charset=utf-8"));
         Request request = new Request.Builder()
                 .url(API_URL)
@@ -27,14 +26,14 @@ public class TextToPromptManager {
 
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) {
-                throw new IOException("API 호출 실패: " + response.code() + " " + response.message());
+                throw new IOException("API call failed: " + response.code() + " " + response.message());
             }
 
             String responseBody = response.body().string();
             return parseResponse(responseBody);
         } catch (IOException e) {
             e.printStackTrace();
-            return "오류 발생: " + e.getMessage();
+            return "Error occurred: " + e.getMessage();
         }
     }
 
