@@ -27,8 +27,19 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0' //테스트 코드 작성용
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+    
+    //이도훈 의존성 추가
+    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    // 다른 필요한 의존성들 추가
+    testImplementation 'junit:junit:4.13.2'
+    //test를 위한 MUkeito 추가
+    implementation 'com.google.code.gson:gson:2.8.9'
+
 }
 
 test {
     useJUnitPlatform()
 }
+
+
