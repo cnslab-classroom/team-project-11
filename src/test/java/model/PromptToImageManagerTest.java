@@ -1,6 +1,5 @@
 package model;
 
-import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
 public class PromptToImageManagerTest {
@@ -9,13 +8,15 @@ public class PromptToImageManagerTest {
 
     @Test
     public void testImage1() {
-        String[] prompts = {"image of a cat", "image of a dog", "image of a bird"};
-        try {
-            for(String prompt : prompts) {
-                manager.downloadImage(prompt);
-            }
-        } catch (IOException e) {
-            System.out.println("1실패: " + e.getMessage());
-        }
+        String prompt = "a hat on a cat";
+        String prompt1 = "a hat on a dog";
+        String prompt2 = "a hat on a bird";
+        manager.downloadImage(prompt);
+        manager.downloadImage(prompt1);
+        manager.downloadImage(prompt2);
+        while (true);
+
     }
 }
+
+
