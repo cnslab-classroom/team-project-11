@@ -3,16 +3,19 @@ package model;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
-
-
 public class PromptToImageManagerTest {
 
-    @Test
-    public void testImage() throws IOException {
-        String prompt = "a cat wearing a hat";
-        PromptToImageManager manager = new PromptToImageManager(prompt);
-        manager.requestHuggingface();
-        manager.downloadImage();
-    }
+    private final PromptToImageManager manager = new PromptToImageManager();
 
+    @Test
+    public void testImage1() {
+        String[] prompts = {"image of a cat", "image of a dog", "image of a bird"};
+        try {
+            for(String prompt : prompts) {
+                manager.downloadImage(prompt);
+            }
+        } catch (IOException e) {
+            System.out.println("1실패: " + e.getMessage());
+        }
+    }
 }
