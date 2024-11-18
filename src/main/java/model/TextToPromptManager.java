@@ -16,7 +16,7 @@ public class TextToPromptManager {
     // 기존모델 gpt2에 한국어를 영어로 변역하고 이미지를 생성하기위한 설명문으로 바꾸는것을 요청했으나 모델의 한계로 예상외의 출력들이 많이나옴
     // 단순히 한글을 영어로 바꾸는 모델로 변경.
     private static final String API_URL = "https://api-inference.huggingface.co/models/Helsinki-NLP/opus-mt-ko-en";
-    private static final String API_KEY = "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"; // API 키
+    private static final String API_KEY = "APT"; // API 키
 
     // OkHttpClient 객체 생성
     static OkHttpClient client = new OkHttpClient();
