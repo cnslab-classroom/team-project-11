@@ -27,7 +27,7 @@ public class TextToImagetextManager {
         // 요청 바디 생성
         JsonObject json = new JsonObject();
         //String diaryTextt ="Focusing on visual elements such as settings, characters, colors, and moods, we transform the "+"\""+diaryText+"\""+"into a detailed and descriptive prompt for image-generating AI.";
-        json.addProperty("inputs", diaryText + "  Convert this into a detailed image description prompt.");
+        json.addProperty("inputs", "Please convert "+"\""+diaryText +"\""+" into a description suitable for an image generation AI.");
     
 
         // 요청 바디 설정
