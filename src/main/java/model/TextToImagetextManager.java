@@ -12,7 +12,7 @@ public class TextToImagetextManager {
 
     // Hugging Face Inference API URL
     private static final String API_URL = "https://api-inference.huggingface.co/models/Qwen/Qwen2.5-Coder-32B-Instruct";
-    private static final String API_KEY = "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"; // API Key 입력
+    private static final String API_KEY = "API"; // API Key 입력
 
     // OkHttpClient 객체 생성
     static OkHttpClient client = new OkHttpClient();
