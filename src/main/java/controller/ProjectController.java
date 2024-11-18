@@ -1,6 +1,7 @@
 package controller;
 
 import service.BoardService;
+import service.TextToImageService;
 import view.InputView;
 import view.OutputView;
 
@@ -8,11 +9,13 @@ public class ProjectController {
     private BoardService boardService;
     private InputView inputView;
     private OutputView outputView;
+    private TextToImageService textToImageService;
 
     public ProjectController() { //객체 생성
         this.boardService = new BoardService();
         this.inputView = new InputView();
         this.outputView = new OutputView();
+        this.textToImageService = new TextToImageService();
     }
 
     public void run() 
@@ -124,6 +127,8 @@ public class ProjectController {
     public void convertToImage() 
     {
         int index = inputView.getAiIndex();
-        TextToImageService.convertToImage(index); // 이미지 변환 --> 이건 아직 구현 안함
+
+        //TextToImageService.convertToImage(content) //boarDto 내의 content를 인자로 받아야 함
+        //board 영역 기능 추가 필요
     }
 }

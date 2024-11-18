@@ -22,7 +22,7 @@ public class TextToPromptManager {
     static OkHttpClient client = new OkHttpClient();
 
     // 입력 텍스트를 프롬프트로 변환하는 메서드
-    public static String convertToPrompt(String inputText) {
+    public String convertToPrompt(String inputText) {
         // 요청 바디 생성
         JsonObject json = new JsonObject();
         // 이전에는 입력의 조건을 넣었으나 모델의 한계로 인해 단순히 번역만 요청

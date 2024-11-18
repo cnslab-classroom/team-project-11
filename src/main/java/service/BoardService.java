@@ -1,6 +1,7 @@
 package service;
 
 import dto.BoardDto;
+import java.util.Vector;
 import model.CrudManager;
 
 public class BoardService {
