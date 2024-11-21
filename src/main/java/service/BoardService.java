@@ -1,78 +1,98 @@
 package service;
 
 import dto.BoardDto;
-import java.util.Vector;
 import model.CrudManager;
+import model.FileIoManager;
+
+import java.util.NoSuchElementException;
+import java.util.Vector;
 
 public class BoardService {
-    private CrudManager crudManager;
 
-    public BoardService() {
+    private final CrudManager crudManager;
+    private final FileIoManager fileIoManager;
+
+    // 생성자: 서비스 초기화
+    public BoardService(String filePath) {
         this.crudManager = new CrudManager();
+        this.fileIoManager = new FileIoManager(filePath);
+    }
+
+    // 서비스 시작 시 데이터베이스 로드
+    public void initialize() {
+        Vector<BoardDto> db = fileIoManager.loadDbFromFile();
+        crudManager.setDb(db);
+    }
+
+    // 서비스 종료 시 데이터베이스 저장
+    public void shutdown() {
+        fileIoManager.saveDbToFile(crudManager.getDb());
     }
 
     // 게시글 추가
-    public String addBoard(BoardDto boardDto) {
+    public void addBoard(BoardDto boardDto) {
         if (boardDto == null) {
-            return "Error! 유효하지 않은 게시글 데이터입니다.";
+            throw new IllegalArgumentException("유효하지 않은 게시글 데이터입니다.");
         }
         crudManager.requestCreate(boardDto);
-        return "게시글이 추가되었습니다: " + boardDto.getTitle();
+    }
+
+    // 게시글 조회
+    public BoardDto getPostById(String id) {
+        try {
+            return crudManager.requestRead(id);
+        } catch (NoSuchElementException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
 
     // 게시글 제목 수정
-    public String updatePostTitle(int index, String newTitle) {
+    public void updatePostTitle(String id, String newTitle) {
         try {
-            BoardDto post = crudManager.requestRead(index);
+            BoardDto post = crudManager.requestRead(id);
             post.setTitle(newTitle);
-            crudManager.requestUpdate(index, post);
-            return "제목이 수정되었습니다.";
-        } catch (IndexOutOfBoundsException e) {
-            return "Error! 해당 인덱스의 게시글이 없습니다.";
+        } catch (NoSuchElementException e) {
+            System.err.println(e.getMessage());
         }
     }
 
     // 게시글 내용 수정
-    public String updatePostContent(int index, String newContent) {
+    public void updatePostContent(String id, String newContent) {
         try {
-            BoardDto post = crudManager.requestRead(index);
+            BoardDto post = crudManager.requestRead(id);
             post.setContent(newContent);
-            crudManager.requestUpdate(index, post);
-            return "내용이 수정되었습니다.";
-        } catch (IndexOutOfBoundsException e) {
-            return "Error! 해당 인덱스의 게시글이 없습니다.";
+        } catch (NoSuchElementException e) {
+            System.err.println(e.getMessage());
         }
     }
 
     // 게시글 제목과 내용 모두 수정
-    public String updatePost(int index, String newTitle, String newContent) {
+    public void updatePost(String id, String newTitle, String newContent) {
         try {
-            BoardDto post = crudManager.requestRead(index);
+            BoardDto post = crudManager.requestRead(id);
             post.setTitle(newTitle);
             post.setContent(newContent);
-            crudManager.requestUpdate(index, post);
-            return "제목과 내용이 모두 수정되었습니다.";
-        } catch (IndexOutOfBoundsException e) {
-            return "Error! 해당 인덱스의 게시글이 없습니다.";
+        } catch (NoSuchElementException e) {
+            System.err.println(e.getMessage());
         }
     }
 
     // 게시글 삭제 요청
-    public String deleteBoard(int index) {
+    public void deleteBoard(String id) {
         try {
-            crudManager.requestDelete(index);
-            return "게시글이 삭제되었습니다.";
-        } catch (IndexOutOfBoundsException e) {
-            return "Error! 해당 인덱스의 게시글이 없습니다.";
+            crudManager.requestDelete(id);
+        } catch (NoSuchElementException e) {
+            System.err.println(e.getMessage());
         }
     }
 
     // 게시글이 존재하는지 확인
-    public boolean exists(int index) {
+    public boolean exists(String id) {
         try {
-            crudManager.requestRead(index);
+            crudManager.requestRead(id);
             return true;
-        } catch (IndexOutOfBoundsException e) {
+        } catch (NoSuchElementException e) {
             return false;
         }
     }
