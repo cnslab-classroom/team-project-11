@@ -2,90 +2,67 @@ package service;
 
 import dto.BoardDto;
 import model.CrudManager;
-import model.FileIoManager;
-
-import java.util.Vector;
 
 public class BoardService {
+    private CrudManager crudManager;
 
-    private final CrudManager crudManager;
-    private final FileIoManager fileIoManager;
-
-    // 생성자: 서비스 초기화
-    public BoardService(String filePath) {
+    public BoardService() {
         this.crudManager = new CrudManager();
-        this.fileIoManager = new FileIoManager(filePath);
-    }
-
-    // 서비스 시작 시 데이터베이스 로드
-    public void initialize() {
-        Vector<BoardDto> db = fileIoManager.loadDbFromFile();
-        crudManager.setDb(db);
-    }
-
-    // 서비스 종료 시 데이터베이스 저장
-    public void shutdown() {
-        fileIoManager.saveDbToFile(crudManager.getDb());
     }
 
     // 게시글 추가
-    public void addBoard(BoardDto boardDto) {
+    public String addBoard(BoardDto boardDto) {
         if (boardDto == null) {
-            throw new IllegalArgumentException("유효하지 않은 게시글 데이터입니다.");
+            return "Error! 유효하지 않은 게시글 데이터입니다.";
         }
         crudManager.requestCreate(boardDto);
-    }
-
-    // 게시글 조회
-    public BoardDto getPostByIndex(int index) {
-        try {
-            return crudManager.requestRead(index);
-        } catch (IndexOutOfBoundsException e) {
-            System.err.println(e.getMessage());
-            return null;
-        }
+        return "게시글이 추가되었습니다: " + boardDto.getTitle();
     }
 
     // 게시글 제목 수정
-    public void updatePostTitle(int index, String newTitle) {
+    public String updatePostTitle(int index, String newTitle) {
         try {
             BoardDto post = crudManager.requestRead(index);
             post.setTitle(newTitle);
             crudManager.requestUpdate(index, post);
+            return "제목이 수정되었습니다.";
         } catch (IndexOutOfBoundsException e) {
-            System.err.println(e.getMessage());
+            return "Error! 해당 인덱스의 게시글이 없습니다.";
         }
     }
 
     // 게시글 내용 수정
-    public void updatePostContent(int index, String newContent) {
+    public String updatePostContent(int index, String newContent) {
         try {
             BoardDto post = crudManager.requestRead(index);
             post.setContent(newContent);
             crudManager.requestUpdate(index, post);
+            return "내용이 수정되었습니다.";
         } catch (IndexOutOfBoundsException e) {
-            System.err.println(e.getMessage());
+            return "Error! 해당 인덱스의 게시글이 없습니다.";
         }
     }
 
     // 게시글 제목과 내용 모두 수정
-    public void updatePost(int index, String newTitle, String newContent) {
+    public String updatePost(int index, String newTitle, String newContent) {
         try {
             BoardDto post = crudManager.requestRead(index);
             post.setTitle(newTitle);
             post.setContent(newContent);
             crudManager.requestUpdate(index, post);
+            return "제목과 내용이 모두 수정되었습니다.";
         } catch (IndexOutOfBoundsException e) {
-            System.err.println(e.getMessage());
+            return "Error! 해당 인덱스의 게시글이 없습니다.";
         }
     }
 
     // 게시글 삭제 요청
-    public void deleteBoard(int index) {
+    public String deleteBoard(int index) {
         try {
             crudManager.requestDelete(index);
+            return "게시글이 삭제되었습니다.";
         } catch (IndexOutOfBoundsException e) {
-            System.err.println(e.getMessage());
+            return "Error! 해당 인덱스의 게시글이 없습니다.";
         }
     }
 
@@ -101,6 +78,6 @@ public class BoardService {
 
     // 모든 게시글 반환
     public Vector<BoardDto> getAllPosts() {
-        return crudManager.requestFull();
+        return crudManager.requestAll();
     }
 }

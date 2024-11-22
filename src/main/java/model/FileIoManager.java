@@ -1,42 +1,37 @@
 package model;
 
 import dto.BoardDto;
-
 import java.io.*;
 import java.util.Vector;
 
+// 파일 입출력을 관리하는 클래스
 public class FileIoManager {
-
     private final String filePath;
 
     public FileIoManager(String filePath) {
         this.filePath = filePath;
     }
 
-    // 데이터베이스를 파일에 저장
-    public void saveDbToFile(Vector<BoardDto> db) {
+    public void saveDbToFile(Vector<BoardDto> boardDb) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
-            oos.writeObject(db);
-            System.out.println("데이터베이스가 성공적으로 저장되었습니다.");
+            oos.writeObject(boardDb);
+            System.out.println("Database saved successfully.");
         } catch (IOException e) {
-            System.err.println("데이터베이스 저장 중 오류 발생: " + e.getMessage());
+            System.err.println("Error saving database: " + e.getMessage());
         }
     }
 
-    // 파일에서 데이터베이스를 로드
     public Vector<BoardDto> loadDbFromFile() {
-        File file = new File(filePath);
-        if (!file.exists()) {
-            System.out.println("저장된 데이터베이스가 없습니다. 새로운 데이터베이스를 생성합니다.");
-            return new Vector<>();
-        }
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
             @SuppressWarnings("unchecked")
             Vector<BoardDto> loadedDb = (Vector<BoardDto>) ois.readObject();
-            System.out.println("데이터베이스가 성공적으로 로드되었습니다.");
+            System.out.println("Database loaded successfully.");
             return loadedDb;
+        } catch (FileNotFoundException e) {
+            System.out.println("No previous database found. Starting with an empty database.");
+            return new Vector<>();
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println("데이터베이스 로드 중 오류 발생: " + e.getMessage());
+            System.err.println("Error loading database: " + e.getMessage());
             return new Vector<>();
         }
     }
