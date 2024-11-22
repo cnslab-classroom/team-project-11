@@ -8,13 +8,14 @@ import view.InputView;
 import view.OutputView;
 
 public class ProjectController {
+    private final String filepath = "C:\\sample\\board.txt"; ///파일 경로는 적절한 위치에 추가해주셔야 영속성 유지가 가능합니다.
     private BoardService boardService;
     private InputView inputView;
     private OutputView outputView;
     private TextToImageService textToImageService;
 
     public ProjectController() { //객체 생성
-        this.boardService = new BoardService();
+        this.boardService = new BoardService(filepath);
         this.inputView = new InputView();
         this.outputView = new OutputView();
         this.textToImageService = new TextToImageService();
