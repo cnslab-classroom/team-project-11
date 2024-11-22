@@ -1,6 +1,7 @@
 package controller;
 
 import dto.BoardDto;
+import java.util.Vector;
 import service.BoardService;
 import service.TextToImageService;
 import view.InputView;
@@ -128,8 +129,8 @@ public class ProjectController {
     public void convertToImage() 
     {
         int index = inputView.getAiIndex();
-
-        //TextToImageService.convertToImage(content) //boarDto 내의 content를 인자로 받아야 함
-        //board 영역 기능 추가 필요
+        Vector<BoardDto> temp =  boardService.getAllPosts();
+        String content = temp.get(index - 1).getContent();
+        textToImageService.convertToImage(content);
     }
 }
