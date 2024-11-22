@@ -43,9 +43,9 @@ public class BoardDto implements Serializable {
     @Override
     public String toString() {
         return "BoardDto{" +
-                "index=" + index +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
+                "글ID=" + index +
+                ", 제목='" + title + '\'' +
+                ", 내용='" + content + '\'' +
                 '}';
     }
 }

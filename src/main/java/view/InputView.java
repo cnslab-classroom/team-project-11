@@ -32,7 +32,7 @@ public class InputView {
   public BoardDto getInput()
   {
 
-    System.out.print("게시글 인덱스, 제목, 내용을 입력하세요 (예: 1,제목,내용): ");
+    System.out.print("게시글 글ID, 제목, 내용을 입력하세요 (예: 1,제목,내용): ");
     String postInput = scanner.nextLine();
     String[] parts = postInput.split(",", 3);
 

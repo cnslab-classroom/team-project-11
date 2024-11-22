@@ -8,7 +8,7 @@ import view.InputView;
 import view.OutputView;
 
 public class ProjectController {
-    private final String filepath = "C:\\sample\\board.txt"; ///파일 경로는 적절한 위치에 추가해주셔야 영속성 유지가 가능합니다.
+    private final String filepath = "C:\\test\\board.txt"; ///파일 경로는 적절한 위치에 추가해주셔야 영속성 유지가 가능합니다.
     private BoardService boardService;
     private InputView inputView;
     private OutputView outputView;
@@ -72,7 +72,7 @@ public class ProjectController {
     // 사용자가 기존에 존재하던 게시글 수정
     public void updatePost() 
     {
-        int index = inputView.getIndex();
+        int index = inputView.getIndex()-1;
         if (index == -1) return;
     
         if (!boardService.exists(index)) // 해당 게시글이 존재하지 않을 경우
@@ -110,7 +110,7 @@ public class ProjectController {
     }
     // 사용자가 기존 게시글 삭제 요청
     public void deletePost() {
-    int index = inputView.getIndex(); // 삭제할 게시글 인덱스 입력
+    int index = inputView.getIndex()-1; // 삭제할 게시글 인덱스 입력
 
     if (index == -1) {
         return; // 잘못된 인덱스 입력 시 메서드 종료

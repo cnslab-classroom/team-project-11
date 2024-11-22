@@ -23,7 +23,7 @@ public class OutputView {
 
         // 게시글 출력
         for (BoardDto board : boardList) {
-            System.out.println("Index: " + board.getIndex() +" | Title: " + board.getTitle() + " | Content: " + board.getContent());
+            System.out.println("글ID: " + board.getIndex() +" | 제목: " + board.getTitle() + " | 내용: " + board.getContent());
         }
     }
 
