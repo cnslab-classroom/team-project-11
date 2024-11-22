@@ -1,20 +1,18 @@
 package view;
 
 import dto.BoardDto;
+import java.util.Vector;
 import model.CrudManager;
-import java.util.List;
 
 public class OutputView {
     private CrudManager crudManager;
 
     // 생성자에서 CrudManager 인스턴스 초기화
-    public OutputView(CrudManager crudManager) {
-        this.crudManager = crudManager;
+    public OutputView() {
     }
 
     // 현재까지 저장되어 있는 게시글 모두 출력
-    public void printBoard() {
-        List<BoardDto> boardList = crudManager.requestAll();
+    public void printBoard(Vector<BoardDto> boardList) {
 
         System.out.println("=== 게시판 목록 ===");
 

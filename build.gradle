@@ -31,7 +31,6 @@ dependencies {
     //이도훈 의존성 추가
     implementation 'com.google.code.gson:gson:2.8.9'
     //implementation 'com.squareup.okhttp3:okhttp:4.9.3' //상단에 최신버전 명시됨
-   
 }
 
 test {

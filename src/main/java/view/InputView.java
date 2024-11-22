@@ -1,5 +1,7 @@
 package view;
 
+import dto.BoardDto;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 //사용자의 입력을 받는건 여기서 처리
@@ -27,7 +29,7 @@ public class InputView {
 
     //인덱스, 제목, 내용은 한번에 입력 받아도 될거 같아서 메서드 하나로 통합
    // 게시글 입력 시 BoardDto 객체 반환
-  public BoardDto getInput() 
+  public BoardDto getInput()
   {
 
     System.out.print("게시글 인덱스, 제목, 내용을 입력하세요 (예: 1,제목,내용): ");

@@ -1,5 +1,6 @@
 package controller;
 
+import dto.BoardDto;
 import service.BoardService;
 import service.TextToImageService;
 import view.InputView;
@@ -55,7 +56,7 @@ public class ProjectController {
         BoardDto boardDto = inputView.getInput();
     
         if (boardDto != null) {
-            boardService.addboardDto(boardDto); // 메서드 이름 수정
+            boardService.addBoard(boardDto); // 메서드 이름 수정
             System.out.println("게시글이 추가되었습니다.");
         } else {
             System.out.println("게시글 추가에 실패했습니다.");
@@ -119,7 +120,7 @@ public class ProjectController {
     }
 
     // 게시글이 존재할 경우 삭제 요청
-    boardService.deleteboardDto(index);
+    boardService.deleteBoard(index);
     System.out.println("게시글이 삭제되었습니다.");
     }
 
