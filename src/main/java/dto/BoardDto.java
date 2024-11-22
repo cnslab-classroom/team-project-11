@@ -1,40 +1,51 @@
 package dto;
-//게시글의 데이터 구조 정의하는 객체
-public class BoardDto {
+
+import java.io.Serializable;
+
+public class BoardDto implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int index;
     private String title;
     private String content;
 
-    // 생성자
     public BoardDto(int index, String title, String content) {
         this.index = index;
         this.title = title;
         this.content = content;
     }
 
-    // Getter 메서드
+    // Getter와 Setter 메서드 추가
     public int getIndex() {
         return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    // Setter 메서드
-    public void setIndex(int index) {
-        this.index = index;
-    }
-
     public void setTitle(String title) {
         this.title = title;
     }
 
+    public String getContent() {
+        return content;
+    }
+
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "BoardDto{" +
+                "index=" + index +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                '}';
     }
 }
