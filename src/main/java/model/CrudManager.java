@@ -2,7 +2,6 @@ package model;
 
 import dto.BoardDto;
 
-import java.util.NoSuchElementException;
 import java.util.Vector;
 
 public class CrudManager {
@@ -19,41 +18,35 @@ public class CrudManager {
         db.add(boardDto);
     }
 
-    // 게시글 조회 (ID로 조회)
-    public BoardDto requestRead(String id) {
-        for (BoardDto post : db) {
-            if (post.getId().equals(id)) {
-                return post;
-            }
+    // 게시글 조회 (index로 조회)
+    public BoardDto requestRead(int index) {
+        if (index >= 0 && index < db.size()) {
+            return db.get(index);
+        } else {
+            throw new IndexOutOfBoundsException("유효하지 않은 인덱스입니다.");
         }
-        throw new NoSuchElementException("해당 ID의 게시글이 없습니다.");
     }
 
     // 게시글 수정
-    public void requestUpdate(String id, BoardDto updatedBoardDto) {
-        for (int i = 0; i < db.size(); i++) {
-            BoardDto post = db.get(i);
-            if (post.getId().equals(id)) {
-                db.set(i, updatedBoardDto);
-                return;
-            }
+    public void requestUpdate(int index, BoardDto updatedBoardDto) {
+        if (index >= 0 && index < db.size()) {
+            db.set(index, updatedBoardDto);
+        } else {
+            throw new IndexOutOfBoundsException("유효하지 않은 인덱스입니다.");
         }
-        throw new NoSuchElementException("해당 ID의 게시글이 없습니다.");
     }
 
     // 게시글 삭제
-    public void requestDelete(String id) {
-        for (int i = 0; i < db.size(); i++) {
-            if (db.get(i).getId().equals(id)) {
-                db.remove(i);
-                return;
-            }
+    public void requestDelete(int index) {
+        if (index >= 0 && index < db.size()) {
+            db.remove(index);
+        } else {
+            throw new IndexOutOfBoundsException("유효하지 않은 인덱스입니다.");
         }
-        throw new NoSuchElementException("해당 ID의 게시글이 없습니다.");
     }
 
     // 전체 게시글 조회
-    public Vector<BoardDto> requestAll() {
+    public Vector<BoardDto> requestFull() {
         return new Vector<>(db);
     }
 

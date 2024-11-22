@@ -4,7 +4,6 @@ import dto.BoardDto;
 import model.CrudManager;
 import model.FileIoManager;
 
-import java.util.NoSuchElementException;
 import java.util.Vector;
 
 public class BoardService {
@@ -38,67 +37,70 @@ public class BoardService {
     }
 
     // 게시글 조회
-    public BoardDto getPostById(String id) {
+    public BoardDto getPostByIndex(int index) {
         try {
-            return crudManager.requestRead(id);
-        } catch (NoSuchElementException e) {
+            return crudManager.requestRead(index);
+        } catch (IndexOutOfBoundsException e) {
             System.err.println(e.getMessage());
             return null;
         }
     }
 
     // 게시글 제목 수정
-    public void updatePostTitle(String id, String newTitle) {
+    public void updatePostTitle(int index, String newTitle) {
         try {
-            BoardDto post = crudManager.requestRead(id);
+            BoardDto post = crudManager.requestRead(index);
             post.setTitle(newTitle);
-        } catch (NoSuchElementException e) {
+            crudManager.requestUpdate(index, post);
+        } catch (IndexOutOfBoundsException e) {
             System.err.println(e.getMessage());
         }
     }
 
     // 게시글 내용 수정
-    public void updatePostContent(String id, String newContent) {
+    public void updatePostContent(int index, String newContent) {
         try {
-            BoardDto post = crudManager.requestRead(id);
+            BoardDto post = crudManager.requestRead(index);
             post.setContent(newContent);
-        } catch (NoSuchElementException e) {
+            crudManager.requestUpdate(index, post);
+        } catch (IndexOutOfBoundsException e) {
             System.err.println(e.getMessage());
         }
     }
 
     // 게시글 제목과 내용 모두 수정
-    public void updatePost(String id, String newTitle, String newContent) {
+    public void updatePost(int index, String newTitle, String newContent) {
         try {
-            BoardDto post = crudManager.requestRead(id);
+            BoardDto post = crudManager.requestRead(index);
             post.setTitle(newTitle);
             post.setContent(newContent);
-        } catch (NoSuchElementException e) {
+            crudManager.requestUpdate(index, post);
+        } catch (IndexOutOfBoundsException e) {
             System.err.println(e.getMessage());
         }
     }
 
     // 게시글 삭제 요청
-    public void deleteBoard(String id) {
+    public void deleteBoard(int index) {
         try {
-            crudManager.requestDelete(id);
-        } catch (NoSuchElementException e) {
+            crudManager.requestDelete(index);
+        } catch (IndexOutOfBoundsException e) {
             System.err.println(e.getMessage());
         }
     }
 
     // 게시글이 존재하는지 확인
-    public boolean exists(String id) {
+    public boolean exists(int index) {
         try {
-            crudManager.requestRead(id);
+            crudManager.requestRead(index);
             return true;
-        } catch (NoSuchElementException e) {
+        } catch (IndexOutOfBoundsException e) {
             return false;
         }
     }
 
     // 모든 게시글 반환
     public Vector<BoardDto> getAllPosts() {
-        return crudManager.requestAll();
+        return crudManager.requestFull();
     }
 }
